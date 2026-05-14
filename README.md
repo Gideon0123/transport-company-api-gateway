@@ -12,13 +12,11 @@ A robust and scalable API Gateway service built with Java that serves as the cen
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
-- [API Routing](#api-routing)
 - [Microservices Integration](#microservices-integration)
 - [Development](#development)
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## 🌐 Overview
@@ -49,12 +47,12 @@ The Transport Company API Gateway is a central hub that manages all incoming API
         ┌────────────────────────────────────────────────┐
         │   Transport Company API Gateway (This Service) │
         │  ────────────────────────────────────────────  │
-        │  • Request Routing                              │
-        │  • Authentication                               │
-        │  • Rate Limiting                                │
-        │  • Load Balancing                               │
-        │  • Circuit Breaking                             │
-        │  • Monitoring & Logging                         │
+        │  • Request Routing                             │
+        │  • Authentication                              │
+        │  • Rate Limiting                               │
+        │  • Load Balancing                              │
+        │  • Circuit Breaking                            │
+        │  • Monitoring & Logging                        │
         └──────┬──────────────────────────┬──────────────┘
                │                          │
                ▼                          ▼
@@ -102,17 +100,15 @@ The Transport Company API Gateway is a central hub that manages all incoming API
 
 ## 🛠️ Tech Stack
 
-- **Language**: Java 11+
+- **Language**: Java 21
 - **Build Tool**: Maven / Gradle
 - **Framework**: Spring Boot (recommended)
-- **API Gateway**: Spring Cloud Gateway / Netflix Zuul
-- **Service Discovery**: Eureka / Consul (optional)
-- **Load Balancing**: Ribbon / Spring Cloud LoadBalancer
+- **API Gateway**: Spring Cloud Gateway
+- **Service Discovery**: Eureka
+- **Load Balancing**: Spring Cloud LoadBalancer
 - **Authentication**: JWT / OAuth2
 - **Logging**: SLF4J, Logback
-- **Monitoring**: Micrometer, Spring Boot Actuator
-- **Testing**: JUnit 5, Mockito
-- **Container**: Docker (optional)
+- **Monitoring**:Spring Boot Actuator
 
 ## 📦 Prerequisites
 
@@ -121,14 +117,7 @@ Before you begin, ensure you have the following installed:
 - **Java Development Kit (JDK)**: Version 11 or higher
 - **Maven**: Version 3.6+ or Gradle 6.0+
 - **Git**: For version control
-- **Docker** (optional): For containerization
-- **Docker Compose** (optional): For running microservices locally
 
-### System Requirements
-
-- Minimum 4GB RAM
-- 2GB disk space for the application
-- Network access to all microservices
 
 ## 🚀 Installation
 
@@ -275,39 +264,6 @@ Expected response:
 }
 ```
 
-## 🔀 API Routing
-
-### Transport Service Routes
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/transport/bookings` | Get all bookings |
-| POST | `/api/transport/bookings` | Create a new booking |
-| GET | `/api/transport/bookings/{id}` | Get booking details |
-| PUT | `/api/transport/bookings/{id}` | Update booking |
-| DELETE | `/api/transport/bookings/{id}` | Cancel booking |
-| GET | `/api/transport/trips` | Get all trips |
-| POST | `/api/transport/trips` | Create new trip |
-| GET | `/api/transport/users/{id}` | Get user profile |
-
-### Email Service Routes
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/email/send` | Send an email |
-| POST | `/api/email/send-bulk` | Send bulk emails |
-| GET | `/api/email/templates` | Get email templates |
-| GET | `/api/email/status/{id}` | Check email delivery status |
-| GET | `/api/email/logs` | Get email activity logs |
-
-### Gateway Routes
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/health` | Health check |
-| GET | `/actuator/health` | Detailed health check |
-| GET | `/actuator/metrics` | Application metrics |
-| GET | `/api/gateway/status` | Gateway status |
 
 ## 🔗 Microservices Integration
 
@@ -447,28 +403,6 @@ curl -X POST http://localhost:8080/api/email/send \
   }'
 ```
 
-## 🚀 Deployment
-
-### Using Docker
-
-```bash
-# Build image
-docker build -t transport-company-api-gateway:latest .
-
-# Run container
-docker run -d \
-  -p 8080:8080 \
-  -e TRANSPORT_SERVICE_URL=http://transport-service:8081 \
-  -e EMAIL_SERVICE_URL=http://email-service:8082 \
-  --name api-gateway \
-  transport-company-api-gateway:latest
-```
-
-### Using Docker Compose (Local Development)
-
-```bash
-docker-compose up -d
-```
 
 ### Production Deployment
 
@@ -518,16 +452,6 @@ For production deployment, consider:
 - Check for request spike patterns
 - Consider using API keys for higher limits
 
-### Debugging
-
-Enable debug logging:
-
-```yaml
-logging:
-  level:
-    com.transportcompany.gateway: DEBUG
-    org.springframework.cloud.gateway: DEBUG
-```
 
 ### Health Check Endpoints
 
@@ -542,41 +466,14 @@ curl http://localhost:8080/actuator/metrics
 curl http://localhost:8080/actuator/metrics/http.server.requests
 ```
 
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these guidelines:
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit changes: `git commit -m 'Add your feature'`
-4. Push to branch: `git push origin feature/your-feature`
-5. Submit a pull request
-
-Please ensure:
-- Code follows the project's style guide
-- Tests are included for new features
-- Documentation is updated accordingly
-- All tests pass before submitting PR
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
-## 📞 Support & Contact
-
-For issues, questions, or suggestions, please:
-
-1. Check existing [GitHub Issues](https://github.com/Gideon0123/transport-company-api-gateway/issues)
-2. Create a new issue with detailed description
-3. Contact the maintainers directly
 
 ## 🔗 Related Projects
 
 - [Transport Company Main Project](https://github.com/Gideon0123/Transport-company-project)
 - [Email Service Microservice](https://github.com/Gideon0123/Transport-company-email-service)
-
----
-
-**Last Updated**: May 2026
