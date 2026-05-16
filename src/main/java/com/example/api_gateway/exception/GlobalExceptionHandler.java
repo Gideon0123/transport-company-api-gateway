@@ -89,9 +89,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    @ExceptionHandler(SeatAlreadyBookedException.class)
     public ResponseEntity<ErrorResponse> handleOptimisticLocking(
-            ObjectOptimisticLockingFailureException ex
+            SeatAlreadyBookedException ex
     ) {
 
         ErrorResponse response = ErrorResponse.builder()
