@@ -78,7 +78,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleInvalidState(
             InvalidStateException ex
     ) {
-
         ErrorResponse response = ErrorResponse.builder()
                 .success(false)
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -93,7 +92,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleOptimisticLocking(
             SeatAlreadyBookedException ex
     ) {
-
         ErrorResponse response = ErrorResponse.builder()
                 .success(false)
                 .status(HttpStatus.CONFLICT.value())
@@ -109,7 +107,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleNotFound(
             ResourceNotFoundException ex
     ) {
-
         ErrorResponse response = ErrorResponse.builder()
                 .success(false)
                 .status(HttpStatus.NOT_FOUND.value())

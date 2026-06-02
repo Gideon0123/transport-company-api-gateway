@@ -23,7 +23,6 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(
             ServerHttpSecurity http
     ) {
-
         return http
 
                 // DISABLE CSRF

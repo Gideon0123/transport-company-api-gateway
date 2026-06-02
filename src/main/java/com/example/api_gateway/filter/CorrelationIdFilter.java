@@ -15,8 +15,7 @@ import java.util.UUID;
 @Slf4j
 public class CorrelationIdFilter implements GlobalFilter, Ordered {
 
-    public static final String CORRELATION_ID =
-            "X-Correlation-Id";
+    public static final String CORRELATION_ID = "X-Correlation-Id";
 
     @Override
     public Mono<Void> filter(
@@ -24,13 +23,12 @@ public class CorrelationIdFilter implements GlobalFilter, Ordered {
             GatewayFilterChain chain
     ) {
 
-        String correlationId =
-                exchange.getRequest()
-                        .getHeaders()
-                        .getFirst(CORRELATION_ID);
+        String correlationId = exchange.getRequest()
+                .getHeaders()
+                .getFirst(CORRELATION_ID);
+
 
         if (correlationId == null) {
-
             correlationId = UUID.randomUUID().toString();
         }
 
@@ -38,11 +36,11 @@ public class CorrelationIdFilter implements GlobalFilter, Ordered {
                 .getHeaders()
                 .add(CORRELATION_ID, correlationId);
 
-        ServerHttpRequest mutatedRequest =
-                exchange.getRequest()
-                        .mutate()
-                        .header(CORRELATION_ID, correlationId)
-                        .build();
+        ServerHttpRequest mutatedRequest = exchange.getRequest()
+                .mutate()
+                .header(CORRELATION_ID, correlationId)
+                .build();
+
 
         log.info(
                 "[{}] Incoming request: {}",
@@ -50,10 +48,9 @@ public class CorrelationIdFilter implements GlobalFilter, Ordered {
                 exchange.getRequest().getURI()
         );
 
-        return chain.filter(
-                exchange.mutate()
-                        .request(mutatedRequest)
-                        .build()
+        return chain.filter(exchange.mutate()
+                .request(mutatedRequest)
+                .build()
         );
     }
 

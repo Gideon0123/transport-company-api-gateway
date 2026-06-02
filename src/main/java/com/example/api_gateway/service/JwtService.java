@@ -31,23 +31,6 @@ public class JwtService {
         );
     }
 
-//    public String generateAccessToken(User user) {
-//
-//        String role = null;
-//
-//        if (user.getUserType() == UserType.STAFF && user.getStaff() != null) {
-//            role = user.getStaff().getRoleType().name();
-//        }
-//
-//        return Jwts.builder()
-//                .setSubject(user.getUsername())
-//                .claim("role", role)
-//                .setIssuedAt(new Date())
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15))
-//                .signWith(getSignKey(), SignatureAlgorithm.HS256)
-//                .compact();
-//    }
-
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -62,16 +45,9 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-//        return Jwts.parserBuilder()
-//                .setSigningKey(getSignKey())
-//                .build()
-//                .parseClaimsJws(token)
-//                .getBody();
-
         return Jwts
                 .parser()
                 .verifyWith((SecretKey) getSignKey())
-//                .setSigningKey(getSignKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
@@ -90,35 +66,3 @@ public class JwtService {
         return redisTemplate.hasKey(token);
     }
 }
-
-//@Service
-//public class JwtService {
-//
-////    @Value("${jwt.secret}")
-//    @Value("${jwt.secret:default-secret}")
-//    private String secret;
-//
-//    private SecretKey getSigningKey() {
-//        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-//    }
-//
-//    public Claims extractAllClaims(String token) {
-//
-//        return Jwts
-//                .parser()
-//                .verifyWith(getSigningKey())
-//                .build()
-//                .parseSignedClaims(token)
-//                .getPayload();
-//    }
-//
-//    public boolean isTokenValid(String token) {
-//
-//        try {
-//            extractAllClaims(token);
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
-//}

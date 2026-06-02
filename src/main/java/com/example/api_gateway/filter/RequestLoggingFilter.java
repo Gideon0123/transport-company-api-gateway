@@ -44,13 +44,11 @@ public class RequestLoggingFilter implements GlobalFilter, Ordered {
                 .then(
                         Mono.fromRunnable(() -> {
 
-                            long duration =
-                                    System.currentTimeMillis() - startTime;
+                            long duration = System.currentTimeMillis() - startTime;
 
-                            int status =
-                                    exchange.getResponse()
-                                            .getStatusCode()
-                                            .value();
+                            int status = exchange.getResponse()
+                                    .getStatusCode()
+                                    .value();
 
                             log.info(
                                     "Response -> Status: {}, Duration: {}ms",

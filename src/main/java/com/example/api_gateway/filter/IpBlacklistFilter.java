@@ -20,7 +20,6 @@ public class IpBlacklistFilter implements GlobalFilter {
             ServerWebExchange exchange,
             GatewayFilterChain chain
     ) {
-
         String ip = exchange.getRequest()
                 .getRemoteAddress()
                 .getAddress()
@@ -28,8 +27,7 @@ public class IpBlacklistFilter implements GlobalFilter {
 
         if (blacklistedIps.contains(ip)) {
 
-            exchange.getResponse()
-                    .setStatusCode(HttpStatus.FORBIDDEN);
+            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
 
             return exchange.getResponse().setComplete();
         }

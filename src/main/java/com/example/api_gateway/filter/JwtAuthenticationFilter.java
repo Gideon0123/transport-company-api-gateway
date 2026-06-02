@@ -23,8 +23,10 @@ public class JwtAuthenticationFilter implements WebFilter {
     private final JwtService jwtService;
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange,
-                             WebFilterChain chain) {
+    public Mono<Void> filter(
+            ServerWebExchange exchange,
+            WebFilterChain chain
+    ) {
 
         String path = exchange.getRequest()
                 .getURI()
@@ -43,9 +45,7 @@ public class JwtAuthenticationFilter implements WebFilter {
                 .getHeaders()
                 .getFirst(HttpHeaders.AUTHORIZATION);
 
-        if (authHeader != null &&
-                authHeader.startsWith("Bearer ")) {
-
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
         }
 
@@ -76,20 +76,17 @@ public class JwtAuthenticationFilter implements WebFilter {
 
                         if (Boolean.TRUE.equals(isBlacklisted)) {
 
-                            exchange.getResponse()
-                                    .setStatusCode(HttpStatus.UNAUTHORIZED);
+                            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
                             return exchange.getResponse().setComplete();
                         }
 
-                        String username =
-                                jwtService.extractUsername(finalToken);
+                        String username = jwtService.extractUsername(finalToken);
 
-                        String role =
-                                jwtService.extractClaim(
-                                        finalToken,
-                                        claims -> claims.get("role", String.class)
-                                );
+                        String role = jwtService.extractClaim(
+                                finalToken,
+                                claims -> claims.get("role", String.class)
+                        );
 
                         UsernamePasswordAuthenticationToken auth =
                                 new UsernamePasswordAuthenticationToken(
@@ -120,8 +117,7 @@ public class JwtAuthenticationFilter implements WebFilter {
 
         } catch (Exception e) {
 
-            exchange.getResponse()
-                    .setStatusCode(HttpStatus.UNAUTHORIZED);
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
             return exchange.getResponse().setComplete();
         }
